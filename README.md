@@ -1,6 +1,6 @@
 # python-ground
 
-### Automated Server Health Monitoring Tool
+### health-monitor - Automated Server Health Monitoring Tool
 
     Description: A tool that monitors key server metrics (CPU, memory, disk usage, network traffic) and sends alerts when thresholds are exceeded.
     Features: Real-time dashboard, email/SMS alerts, history logs, and graphical analysis of trends.
