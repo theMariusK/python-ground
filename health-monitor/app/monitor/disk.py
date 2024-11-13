@@ -11,9 +11,12 @@ def get_disk_info():
     }
     return disk_info
 
-if __name__ == "__main__":
+def get_info():
     data = {
         "disk_info": get_disk_info()
     }
 
-    print(json.dumps(data, indent=4))
+    return json.dumps(data, indent=4)
+
+if __name__ == "__main__":
+    print(get_info())

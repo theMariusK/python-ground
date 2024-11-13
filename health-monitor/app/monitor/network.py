@@ -8,9 +8,12 @@ def get_network_info():
         "bytes_recv": net_io_counters.bytes_recv
     }
 
-if __name__ == "__main__":
+def get_info():
     data = {
         "network_info": get_network_info()
     }
 
-    print(json.dumps(data, indent=4))
+    return json.dumps(data, indent=4)
+
+if __name__ == "__main__":
+    print(get_info())

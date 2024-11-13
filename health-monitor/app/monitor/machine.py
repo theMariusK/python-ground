@@ -26,10 +26,13 @@ def get_system_uptime():
     }
     return uptime
 
-if __name__ == '__main__':
+def get_info():
     data = {
         "kernel_info": get_kernel_info(),
         "system_uptime": get_system_uptime()
     }
 
-    print(json.dumps(data, indent=4))
+    return json.dumps(data, indent=4)
+
+if __name__ == '__main__':
+    print(get_info())

@@ -9,9 +9,12 @@ def get_cpu_info():
         "total_cpu_usage": psutil.cpu_percent(interval=1)
     }
 
-if __name__ == "__main__":
+def get_info():
     data = {
         "cpu_info": get_cpu_info()
     }
 
-    print(json.dumps(data, indent=4))
+    return json.dumps(data, indent=4)
+
+if __name__ == "__main__":
+    print(get_info())
