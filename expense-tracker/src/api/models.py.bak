@@ -10,12 +10,13 @@ class Type(Enum):
     others = 5
 
 class Expense(BaseModel):
-    title: str
-    price: float
-    exp_type: Type = Type.others
-    time: datetime.datetime = datetime.datetime.now()
+    def __init__(self, title : str, price : float, exp_type : Type = Type.others):
+        self.title = title
+        self.price = price
+        self.exp_type = exp_type
+        self.time = datetime.datetime.now()
 
-class User():
+class User(BaseModel):
     def __init__(self, username : str, password : str):
         self.username = username
         self.__password = hash(password)

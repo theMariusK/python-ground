@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .expense, button {
+            padding: 10px;
+            margin: 5px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #fff;
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Sign-In</h2>
+    <div>
+        <input type="text" class="username" id="username_login" placeholder="Username" />
+        <input type="number" class="password" id="password_login" placeholder="Password" />
+        <button onclick="login()">Sign-In</button>
+    </div>
+
+    <h2>Sign-Up</h2>
+    <div>
+        <input type="text" class="username" id="username_register" placeholder="Username" />
+        <input type="number" class="password" id="password_register" placeholder="Password" />
+        <button onclick="register()">Sign-Up</button>
+    </div>
+    <h1>Expense Tracker</h1>
+    <div>
+	<br>
+	
+        <input type="text" id="title" class="expense" placeholder="Expense Title" />
+        <input type="number" id="price" class="expense" placeholder="Expense Price" />
+        <button onclick="addExpense()">Add Expense</button>
+    </div>
+    <h2>Expenses</h2>
+    <ul id="expenses-list"></ul>
+
+    <script>
+        const apiBaseUrl = "http://127.0.0.1:8000";
+
+        async function fetchExpenses() {
+            try {
+                const response = await fetch(`${apiBaseUrl}/expenses`);
+                const expenses = await response.json();
+
+                const expensesList = document.getElementById("expenses-list");
+                expensesList.innerHTML = "";
+
+                expenses.forEach(expense => {
+                    const li = document.createElement("li");
+                    li.textContent = `${expense.title}: $${expense.price.toFixed(2)}`;
+                    expensesList.appendChild(li);
+                });
+            } catch (error) {
+                console.error("Error fetching expenses:", error);
+            }
+        }
+
+        async function addExpense() {
+            const title = document.getElementById("title").value;
+            const price = document.getElementById("price").value;
+
+            if (!title || !price) {
+                alert("Please provide both title and price.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`${apiBaseUrl}/expense`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ title, price: parseFloat(price) })
+                });
+
+                if (response.ok) {
+                    document.getElementById("title").value = "";
+                    document.getElementById("price").value = "";
+                    fetchExpenses();
+                } else {
+                    alert("Failed to add expense.");
+                }
+            } catch (error) {
+                console.error("Error adding expense:", error);
+            }
+        }
+
+        fetchExpenses();
+    </script>
+</body>
+</html>
