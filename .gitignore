@@ -1,2 +1,5 @@
 *.pyc
 *.pyo
+expense-tracker/*
+!.gitignore
+!expense-tracker/src
